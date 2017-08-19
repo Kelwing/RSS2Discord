@@ -14,6 +14,7 @@ def run(args):
     try:
         print('Starting the feed listener...')
         while True:
+            print('Checking feeds')
             feeds = Feed.select()
             for f in feeds:
                 links = Link.select().where(Link.feed == f)
@@ -58,8 +59,10 @@ def run(args):
                     f.initialized = True
                     f.save()
 
-            # Sleep for 10 minutes
-            time.sleep(600)
+            # Sleep for specified amount of time
+            if args.runonce:
+                sys.exit(0)
+            time.sleep(args.freq)
         sys.exit(0)
     except Exception as e:
         print(f"Error in run: {e}")
@@ -132,7 +135,12 @@ parser_run.add_argument(
     '--freq',
     type=int,
     action='store',
+    default=600,
     help='Frequency (in minutes) to check the RSS feed')
+parser_run.add_argument(
+    '--runonce',
+    action='store_true',
+    help='Runs through the run function once, useful for running as a cron')
 parser_run.set_defaults(func=run)
 
 # Add command tree
