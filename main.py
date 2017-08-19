@@ -183,11 +183,3 @@ try:
     args.func(args)
 except AttributeError as e:
     parser.print_help()
-
-#d = feedparser.parse('https://www.theregister.co.uk/personal_tech/headlines.atom')
-#for entry in d.entries:
-#    print(f"ID: {entry.id}")
-#    print(f"Title: {entry.title}")
-#    print(f"Link: {entry.link}")
-#    print(f"Summary: {entry.summary}")
-#    print("\n--------------------")
