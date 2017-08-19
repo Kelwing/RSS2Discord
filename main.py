@@ -12,7 +12,7 @@ db.create_tables([Link, Destination, Article, Feed], safe=True)
 
 def run(args):
     try:
-        print('Starting the feed listener...')
+        print('Starting the feed listener')
         while True:
             print('Checking feeds')
             feeds = Feed.select()
