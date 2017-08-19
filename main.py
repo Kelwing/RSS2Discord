@@ -160,9 +160,9 @@ parser_add_webhook = add_sp.add_parser(
     'webhook', help='Add a webhook to the system')
 parser_add_webhook.add_argument(
     'url', help='Webhook URL to send new articles to')
+parser_add_webhook.add_argument('--test', action='store_true', help='Loads a test webhook URL from the environment')
 parser_add_feed = add_sp.add_parser('feed', help='Add a feed to the system')
 parser_add_feed.add_argument('url', help='Feed URL to read articles from')
-parser_add_feed.add_argument('--test', action='store_true', help='Loads a test webhook URL from the environment')
 parser_add_webhook.set_defaults(func=add_webhook)
 parser_add_feed.set_defaults(func=add_feed)
 
