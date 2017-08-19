@@ -3,7 +3,7 @@ python:
     - "3.6"
 install: "pip install -r requirements.txt"
 script: 
-    - python ./main.py add webhook https://discordapp.com/api/webhooks/316091808172212225/vvD-kuCepptFkbIx0HrC0YqDks9ruczHBGOMF1VeNONAcHkUoJSfxmvDu-s0uXaXkIXK
+    - python ./main.py add webhook None --test
     - python ./main.py add feed https://www.theregister.co.uk/personal_tech/headlines.atom
     - python ./main.py link 1 1
     - python ./main.py list webhook

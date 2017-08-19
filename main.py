@@ -1,5 +1,6 @@
 import argparse
 import feedparser
+import os
 import re
 import requests
 import sys
@@ -9,6 +10,10 @@ from models import *
 db.connect()
 db.create_tables([Link, Destination, Article, Feed], safe=True)
 
+try:
+    wh_url = os.environ['WEBHOOK_URL']
+except:
+    wh_url = None
 
 def run(args):
     try:
@@ -69,7 +74,10 @@ def run(args):
 
 
 def add_webhook(args):
-    w = Destination.create(url=args.url)
+    if wh_url and args.test:
+        w = Destination.create(url=wh_url)
+    else:
+        w = Destination.create(url=args.url)
     print(f'Webhook added successfully with ID {w.id}')
     sys.exit(0)
 
@@ -154,6 +162,7 @@ parser_add_webhook.add_argument(
     'url', help='Webhook URL to send new articles to')
 parser_add_feed = add_sp.add_parser('feed', help='Add a feed to the system')
 parser_add_feed.add_argument('url', help='Feed URL to read articles from')
+parser_add_feed.add_argument('--test', action='store_true', help='Loads a test webhook URL from the environment')
 parser_add_webhook.set_defaults(func=add_webhook)
 parser_add_feed.set_defaults(func=add_feed)
 
