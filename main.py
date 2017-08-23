@@ -46,7 +46,7 @@ def run(args):
                 d = feedparser.parse(f.url)
                 if not f.initialized:
                     print(
-                        f"Feed: {f.id} is not initialized, adding all articles to database"
+                        f'Feed {f.id} is not initialized, adding all articles to database'
                     )
                 for entry in d.entries:
                     if not f.initialized:
@@ -62,14 +62,14 @@ def run(args):
                         except:
                             # This is a new Article
                             print(
-                                "Found new article, sending to linked webhooks"
+                                'Found new article, sending to linked webhooks'
                             )
                             summary = re.sub('<[^<]+?>', '', entry.summary)
                             data = {
-                                "username":
-                                "TechNewsBot",
-                                "content":
-                                f"**{entry.title}**\n{summary}\n[Read Article]({entry.link})"
+                                'username':
+                                'TechNewsBot',
+                                'content':
+                                f'**{entry.title}**\n{summary}\n[Read Article]({entry.link})'
                             }
                             a = Article.create(
                                 id=entry.id,
@@ -80,7 +80,7 @@ def run(args):
                             for l in links:
                                 requests.post(l.webhook.url, json=data)
                 if not f.initialized:
-                    print("Initialization done")
+                    print('Initialization done')
                     f.initialized = True
                     f.save()
 
@@ -90,7 +90,7 @@ def run(args):
             time.sleep(args.freq)
         sys.exit(0)
     except Exception as e:
-        print(f"Error in run: {e}")
+        print(f'Error in run: {e}')
 
 
 def add_webhook(args):
@@ -124,7 +124,7 @@ def rm_feed(args):
 
 def list_webhook(args):
     webhooks = Destination.select()
-    print("All registered webhooks:")
+    print('All registered webhooks:')
     for w in webhooks:
         print(f'{w.id}: {w.url}')
     sys.exit(0)
@@ -132,7 +132,7 @@ def list_webhook(args):
 
 def list_feed(args):
     feeds = Feed.select()
-    print("All registered feeds:")
+    print('All registered feeds:')
     for f in feeds:
         print(f'{f.id}: {f.url}')
     sys.exit(0)
@@ -140,7 +140,7 @@ def list_feed(args):
 
 def list_link(args):
     links = Link.select()
-    print("All feed to webhook links:")
+    print('All feed to webhook links:')
     for l in links:
         print(f'{l.feed.id} => {l.webhook.id}')
     sys.exit(0)
@@ -150,7 +150,7 @@ def link(args):
     w = Destination.get(Destination.id == args.webhook)
     f = Feed.get(Feed.id == args.feed)
     l = Link.create(webhook=w, feed=f)
-    print(f"Link created successfully with ID {l.id}")
+    print(f'Link created successfully with ID {l.id}')
     sys.exit(0)
 
 
