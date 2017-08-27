@@ -168,7 +168,7 @@ parser_run.add_argument(
 parser_run.add_argument(
     '--runonce',
     action='store_true',
-    help='Runs through the run function once, useful for running as a cron')
+    help='Runs through the run function once, useful for running as a cron job')
 parser_run.set_defaults(func=run)
 
 # Add command tree
