@@ -65,11 +65,12 @@ def run(args):
                                 'Found new article, sending to linked webhooks'
                             )
                             summary = re.sub('<[^<]+?>', '', entry.summary)
+                            title = re.sub('</?i>', '*', entry.title)
                             data = {
                                 'username':
                                 'TechNewsBot',
                                 'content':
-                                f'**{entry.title}**\n{summary}\n[Read Article]({entry.link})'
+                                f'**{title}**\n{summary}\n[Read Article]({entry.link})'
                             }
                             a = Article.create(
                                 id=entry.id,
